@@ -1,9 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import path from "path";
 import { OrderRoutes } from "./app/modules/order/order.route";
 import { ProductRoutes } from "./app/modules/product/product.route";
-import { generateUI } from "./views/uiGenerator";
+import { generateUI } from "./views/uiView";
 
 const app: Application = express();
 
