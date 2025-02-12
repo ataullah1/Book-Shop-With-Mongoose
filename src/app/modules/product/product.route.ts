@@ -10,6 +10,6 @@ router.post(
 router.get("/", ProductController.getAllProducts as RequestHandler);
 router.get("/:productId", ProductController.getSingleProduct as RequestHandler);
 router.put("/:productId", ProductController.updateProduct as RequestHandler);
-router.delete("/:id", ProductController.deleteProduct as RequestHandler);
+router.delete("/:productId", ProductController.deleteProduct as RequestHandler);
 
 export const ProductRoutes = router;
