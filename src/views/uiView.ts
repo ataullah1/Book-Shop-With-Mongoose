@@ -1,6 +1,6 @@
 interface Styles {
   [key: string]: {
-    [key: string]: string;
+    [key: string]: string | { [key: string]: string };
   };
 }
 
@@ -184,20 +184,116 @@ const styles: Styles = {
   },
   footer: {
     textAlign: "center",
-    padding: "3rem 2rem",
-    background: "rgba(26, 26, 46, 0.8)",
-    color: "var(--text-light)",
-    borderTop: "1px solid var(--card-border)",
+    padding: "4rem 2rem",
+    background:
+      "linear-gradient(180deg, rgba(15, 15, 26, 0.8) 0%, rgba(26, 26, 46, 0.95) 100%)",
+    color: "#94a3b8",
+    borderTop: "1px solid rgba(99, 102, 241, 0.2)",
     backdropFilter: "blur(10px)",
+    position: "relative",
+    overflow: "hidden",
+  },
+  footerContent: {
+    position: "relative",
+    zIndex: "2",
+    maxWidth: "1200px",
+    margin: "0 auto",
+  },
+  footerGlow: {
+    position: "absolute",
+    top: "-50%",
+    left: "-50%",
+    width: "200%",
+    height: "200%",
+    background:
+      "radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)",
+    opacity: "0.5",
+    animation: "rotate 20s linear infinite",
+  },
+  developerInfo: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "1.5rem",
+    marginTop: "1.5rem",
+    flexWrap: "wrap",
+  },
+  socialLink: {
+    color: "#94a3b8",
+    textDecoration: "none",
+    transition: "all 0.3s ease",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.8rem",
+    padding: "0.8rem 1.5rem",
+    borderRadius: "12px",
+    background: "rgba(99, 102, 241, 0.1)",
+    border: "1px solid rgba(99, 102, 241, 0.2)",
+    fontSize: "0.95rem",
+    fontWeight: "500",
+    backdropFilter: "blur(5px)",
+  },
+  "@keyframes rotate": {
+    "0%": { transform: "rotate(0deg)" },
+    "100%": { transform: "rotate(360deg)" },
+  },
+  "@keyframes float": {
+    "0%, 100%": { transform: "translateY(0)" },
+    "50%": { transform: "translateY(-10px)" },
+  },
+  "@keyframes pulse": {
+    "0%, 100%": { opacity: "0.6" },
+    "50%": { opacity: "1" },
+  },
+  endpointCard: {
+    background: "rgba(26, 26, 46, 0.6)",
+    backdropFilter: "blur(10px)",
+    padding: "2rem",
+    borderRadius: "16px",
+    border: "1px solid rgba(99, 102, 241, 0.2)",
+    marginBottom: "2rem",
+    transition: "all 0.3s ease",
+  },
+  methodBadge: {
+    padding: "0.5rem 1rem",
+    borderRadius: "8px",
+    fontWeight: "600",
+    fontSize: "0.9rem",
+    display: "inline-block",
+    marginBottom: "1rem",
+  },
+  methodGet: {
+    background: "rgba(34, 197, 94, 0.1)",
+    color: "#22c55e",
+    border: "1px solid rgba(34, 197, 94, 0.2)",
+  },
+  methodPost: {
+    background: "rgba(99, 102, 241, 0.1)",
+    color: "#818cf8",
+    border: "1px solid rgba(99, 102, 241, 0.2)",
+  },
+  methodPut: {
+    background: "rgba(234, 179, 8, 0.1)",
+    color: "#facc15",
+    border: "1px solid rgba(234, 179, 8, 0.2)",
+  },
+  methodDelete: {
+    background: "rgba(239, 68, 68, 0.1)",
+    color: "#ef4444",
+    border: "1px solid rgba(239, 68, 68, 0.2)",
   },
 };
 
-const createStyle = (styleObj: { [key: string]: string }): string => {
+const createStyle = (styleObj: {
+  [key: string]: string | { [key: string]: string };
+}): string => {
   return Object.entries(styleObj)
-    .map(
-      ([key, value]) =>
-        `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`
-    )
+    .map(([key, value]) => {
+      if (typeof value === "string") {
+        return `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`;
+      }
+      return value;
+    })
     .join(";");
 };
 
@@ -209,6 +305,8 @@ export const generateUI = () => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Book Shop API Documentation</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -278,6 +376,39 @@ export const generateUI = () => {
                 font-size: 0.9em;
                 color: #666;
                 font-style: italic;
+            }
+            .card {
+                ${createStyle(styles.card)}
+                animation: float 6s ease-in-out infinite;
+            }
+            
+            .card:hover .card-glow {
+                opacity: 0.1;
+            }
+            
+            .social-link:hover {
+                transform: translateY(-3px);
+                background: var(--gradient-primary);
+                color: white;
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            }
+            
+            @keyframes rotate {
+                ${createStyle(styles["@keyframes rotate"])}
+            }
+            
+            @keyframes float {
+                ${createStyle(styles["@keyframes float"])}
+            }
+            
+            @keyframes pulse {
+                ${createStyle(styles["@keyframes pulse"])}
+            }
+            
+            .endpoint-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+                border-color: rgba(99, 102, 241, 0.4);
             }
         </style>
     </head>
@@ -421,6 +552,36 @@ export const generateUI = () => {
                 <p>For testing the API, use tools like Postman or curl.</p>
             </div>
         </div>
+        
+        <footer style="${createStyle(styles.footer)}">
+            <div class="footer-glow" style="${createStyle(
+              styles.footerGlow
+            )}"></div>
+            <div class="footer-content" style="${createStyle(
+              styles.footerContent
+            )}">
+                <p style="font-size: 1.1rem; margin-bottom: 1rem;">© ${new Date().getFullYear()} Book Shop API. All rights reserved.</p>
+                <div class="developer-info" style="${createStyle(
+                  styles.developerInfo
+                )}">
+                    <p style="font-size: 1.1rem;">Developed with <span style="color: #ef4444;">❤️</span> by Ataullah</p>
+                    <a href="https://github.com/ataullah1" 
+                       class="social-link" 
+                       style="${createStyle(styles.socialLink)}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-github" style="font-size: 1.2rem;"></i> GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/md-ataullah" 
+                       class="social-link" 
+                       style="${createStyle(styles.socialLink)}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-linkedin" style="font-size: 1.2rem;"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </footer>
     </body>
     </html>
   `;
