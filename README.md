@@ -158,7 +158,7 @@ cd Book-Shop-With-Mongoose
 ### Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Environment Variables
@@ -173,7 +173,7 @@ DATABASE_URL=mongodb://localhost:27017/book-shop
 ### Run the Server
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ## 📌 API Response Format
