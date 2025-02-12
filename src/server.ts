@@ -1,20 +1,31 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import mongoose from "mongoose";
 import app from "./app";
 
-const port = process.env.PORT || 5000;
-const dbUrl = process.env.DATABASE_URL || "mongodb://localhost:27017/book-shop";
-
 async function main() {
   try {
-    await mongoose.connect(dbUrl);
-    console.log("🛢 Database connection successful ");
+    if (!process.env.DATABASE_URL) {
+      throw new Error("DATABASE_URL is not defined in environment variables");
+    }
 
+    await mongoose.connect(process.env.DATABASE_URL);
+    console.log("🛢 Database connection successful");
+
+    const port = process.env.PORT || 5000;
     app.listen(port, () => {
-      console.log(`✅ Server is running on port ${port}`);
+      console.log(`Server is running on port ${port}`);
     });
-  } catch (err) {
-    console.log("❌ Failed to connect database", err);
+  } catch (error) {
+    console.error("Failed to connect to database:", error);
+    process.exit(1);
   }
 }
+
+process.on("unhandledRejection", (error) => {
+  console.log("UnhandledRejection:", error);
+  process.exit(1);
+});
 
 main();
