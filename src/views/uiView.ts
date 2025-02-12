@@ -201,159 +201,225 @@ const createStyle = (styleObj: { [key: string]: string }): string => {
     .join(";");
 };
 
-export const generateUI = (): string => {
+export const generateUI = () => {
   return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Book Shop API</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <title>Book Shop API Documentation</title>
         <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            :root { ${createStyle(styles.root)} }
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f5f5f5;
             }
-            @keyframes float {
-                0% { transform: translateY(0px); }
-                50% { transform: translateY(-10px); }
-                100% { transform: translateY(0px); }
+            .container {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
             }
-            .animate-fade-in {
-                animation: fadeIn 0.8s ease-out forwards;
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
             }
-            .animate-fade-in-delay {
-                animation: fadeIn 0.8s ease-out 0.2s forwards;
-                opacity: 0;
+            .endpoint {
+                background-color: #f8f9fa;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+                border-left: 4px solid #3498db;
             }
-            .animate-float {
-                animation: float 6s ease-in-out infinite;
+            .method {
+                display: inline-block;
+                padding: 5px 10px;
+                border-radius: 3px;
+                color: white;
+                font-weight: bold;
+                margin-right: 10px;
             }
-            .card-hover:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            .get { background-color: #2ecc71; }
+            .post { background-color: #3498db; }
+            .put { background-color: #f1c40f; }
+            .delete { background-color: #e74c3c; }
+            .url {
+                color: #34495e;
+                font-family: monospace;
+                background-color: #ecf0f1;
+                padding: 5px;
+                border-radius: 3px;
             }
-            .card-hover:hover .card-glow {
-                opacity: 0.1;
+            .section {
+                margin: 40px 0;
+            }
+            .example {
+                background-color: #2c3e50;
+                color: #ecf0f1;
+                padding: 15px;
+                border-radius: 5px;
+                overflow-x: auto;
+            }
+            .revenue-section {
+                background-color: #e8f5e9;
+                padding: 20px;
+                border-radius: 5px;
+                margin: 20px 0;
+                border-left: 4px solid #4caf50;
+            }
+            .note {
+                font-size: 0.9em;
+                color: #666;
+                font-style: italic;
             }
         </style>
     </head>
     <body>
-        <div style="${createStyle(styles.container)}">
-            <nav style="${createStyle(styles.navbar)}">
-                <div style="${createStyle(styles.logo)}">
-                    <span style="${createStyle(
-                      styles.logoIcon
-                    )}" class="animate-float">📚</span>
-                    <span style="${createStyle(
-                      styles.logoText
-                    )}">Book Shop API</span>
-                </div>
-                <div>
-                    <a href="https://github.com/ataullah1/Book-Shop-With-Mongoose" target="_blank"
-                       style="text-decoration: none; color: var(--text); margin-left: 2rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.9; transition: opacity 0.3s ease;" 
-                       onmouseover="this.style.opacity='1'" 
-                       onmouseout="this.style.opacity='0.9'"
-                       >
-                       <span style="font-size: 1.2rem;">⭐</span> GitHub
-                    </a>
-                </div>
-            </nav>
+        <div class="container">
+            <h1>📚 Book Shop API Documentation</h1>
 
-            <main style="${createStyle(styles.hero)}">
-                <div style="${createStyle(
-                  styles.heroContent
-                )}" class="animate-fade-in">
-                    <h1 style="${createStyle(
-                      styles.title
-                    )}">Welcome to Book Shop API</h1>
-                    <p style="${createStyle(styles.subtitle)}">
-                        Experience a modern, powerful RESTful API designed for seamless book management and order processing
-                    </p>
+            <div class="section">
+                <h2>Products API</h2>
+                
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="url">/api/products/create-product</span>
+                    <p>Create a new book</p>
+                    <div class="example">
+                        <pre>
+{
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "price": 10,
+  "category": "Fiction",
+  "description": "A story about the American dream.",
+  "quantity": 100,
+  "inStock": true
+}</pre>
+                    </div>
                 </div>
 
-                <div style="${createStyle(styles.endpointsSection)}">
-                    <h2 style="${createStyle(
-                      styles.endpointsTitle
-                    )}">Explore Our API Endpoints</h2>
-                    <div style="${createStyle(styles.endpointGrid)}">
-                        <div style="${createStyle(
-                          styles.card
-                        )}" class="animate-fade-in card-hover">
-                            <div class="card-glow" style="${createStyle(
-                              styles.cardGlow
-                            )}"></div>
-                            <div style="${createStyle(
-                              styles.cardIcon
-                            )}" class="animate-float">📚</div>
-                            <h3 style="${createStyle(
-                              styles.cardTitle
-                            )}">Products API</h3>
-                            <p style="${createStyle(
-                              styles.cardDescription
-                            )}">Comprehensive book inventory management</p>
-                            <ul style="${createStyle(styles.featureList)}">
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">✨ Add and update books</li>
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">📊 Track inventory levels</li>
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">🔍 Advanced search capabilities</li>
-                            </ul>
-                            <a href="/api/products" style="${createStyle({
-                              ...styles.button,
-                              ...styles.buttonOutline,
-                            })}">
-                                Explore Products <span style="margin-left: 5px;">→</span>
-                            </a>
-                        </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="url">/api/products</span>
+                    <p>Get all books</p>
+                </div>
 
-                        <div style="${createStyle(
-                          styles.card
-                        )}" class="animate-fade-in-delay card-hover">
-                            <div class="card-glow" style="${createStyle(
-                              styles.cardGlow
-                            )}"></div>
-                            <div style="${createStyle(
-                              styles.cardIcon
-                            )}" class="animate-float">🛍️</div>
-                            <h3 style="${createStyle(
-                              styles.cardTitle
-                            )}">Orders API</h3>
-                            <p style="${createStyle(
-                              styles.cardDescription
-                            )}">Efficient order processing system</p>
-                            <ul style="${createStyle(styles.featureList)}">
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">💫 Process orders instantly</li>
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">📦 Real-time tracking</li>
-                                <li style="${createStyle(
-                                  styles.featureItem
-                                )}">📱 Customer management</li>
-                            </ul>
-                            <a href="/api/orders" style="${createStyle({
-                              ...styles.button,
-                              ...styles.buttonOutline,
-                            })}">
-                                Explore Orders <span style="margin-left: 5px;">→</span>
-                            </a>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="url">/api/products/:productId</span>
+                    <p>Get a specific book</p>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method put">PUT</span>
+                    <span class="url">/api/products/:productId</span>
+                    <p>Update a book</p>
+                    <div class="example">
+                        <pre>
+{
+  "price": 15,
+  "quantity": 25
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method delete">DELETE</span>
+                    <span class="url">/api/products/:productId</span>
+                    <p>Delete a book</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Orders API</h2>
+                
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="url">/api/orders/create-order</span>
+                    <p>Create a new order</p>
+                    <div class="example">
+                        <pre>
+{
+  "email": "customer@example.com",
+  "product": "648a45e5f0123c45678d9012",
+  "quantity": 2
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="url">/api/orders</span>
+                    <p>Get all orders</p>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="url">/api/orders/:orderId</span>
+                    <p>Get a specific order</p>
+                </div>
+
+                <div class="revenue-section">
+                    <h3>📊 Revenue Analytics</h3>
+                    <div class="endpoint">
+                        <span class="method get">GET</span>
+                        <span class="url">/api/orders/revenue</span>
+                        <p>Calculate total revenue from all orders</p>
+                        <div class="example">
+                            <pre>
+{
+  "success": true,
+  "message": "Revenue calculated successfully",
+  "data": {
+    "totalRevenue": 450
+  }
+}</pre>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
 
-            <footer style="${createStyle(styles.footer)}">
-                <p>© ${new Date().getFullYear()} Book Shop API. Created by <a href="https://www.linkedin.com/in/md-ataullah/" target="_blank" style="color: var(--secondary); text-decoration: none; transition: color 0.3s ease;">Md Ataullah</a>
-            </footer>
+            <div class="section">
+                <h2>Response Formats</h2>
+                
+                <div class="endpoint">
+                    <h3>Success Response</h3>
+                    <div class="example">
+                        <pre>
+{
+  "success": true,
+  "message": "Success message here",
+  "data": {}
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>Error Response</h3>
+                    <div class="example">
+                        <pre>
+{
+  "success": false,
+  "message": "Error message here",
+  "error": "ErrorType",
+  "stack": "Error stack trace"
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note">
+                <p>Note: Replace :productId and :orderId with actual IDs when making requests.</p>
+                <p>For testing the API, use tools like Postman or curl.</p>
+            </div>
         </div>
     </body>
     </html>

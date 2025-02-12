@@ -2,6 +2,8 @@
 
 A RESTful API for managing a book shop's inventory and orders, built with Express.js, TypeScript, and Mongoose.
 
+**Live API:** [https://book-shop-five-eta.vercel.app/](https://book-shop-five-eta.vercel.app/)
+
 ## 🚀 Features
 
 ### Product Management
@@ -35,7 +37,7 @@ A RESTful API for managing a book shop's inventory and orders, built with Expres
 #### Create a Book
 
 ```http
-POST /api/products/create-product
+POST https://book-shop-five-eta.vercel.app/api/products/create-product
 ```
 
 **Request Body:**
@@ -55,19 +57,19 @@ POST /api/products/create-product
 #### Get All Books
 
 ```http
-GET /api/products
+GET https://book-shop-five-eta.vercel.app/api/products
 ```
 
 #### Get a Specific Book
 
 ```http
-GET /api/products/:productId
+GET https://book-shop-five-eta.vercel.app/api/products/:productId
 ```
 
 #### Update a Book
 
 ```http
-PUT /api/products/:productId
+PUT https://book-shop-five-eta.vercel.app/api/products/:productId
 ```
 
 **Request Body:**
@@ -82,7 +84,7 @@ PUT /api/products/:productId
 #### Delete a Book
 
 ```http
-DELETE /api/products/:productId
+DELETE https://book-shop-five-eta.vercel.app/api/products/:productId
 ```
 
 ### Orders API
@@ -90,7 +92,7 @@ DELETE /api/products/:productId
 #### Create an Order
 
 ```http
-POST /api/orders/create-order
+POST https://book-shop-five-eta.vercel.app/api/orders/create-order
 ```
 
 **Request Body:**
@@ -106,19 +108,19 @@ POST /api/orders/create-order
 #### Get All Orders
 
 ```http
-GET /api/orders
+GET https://book-shop-five-eta.vercel.app/api/orders
 ```
 
 #### Get a Specific Order
 
 ```http
-GET /api/orders/:orderId
+GET https://book-shop-five-eta.vercel.app/api/orders/:orderId
 ```
 
 #### Calculate Revenue
 
 ```http
-GET /api/orders/revenue
+GET https://book-shop-five-eta.vercel.app/api/orders/revenue
 ```
 
 ## 📂 Project Structure
