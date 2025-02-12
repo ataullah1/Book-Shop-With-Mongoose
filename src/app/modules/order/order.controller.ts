@@ -16,6 +16,15 @@ const createOrder = async (req: Request, res: Response) => {
       });
     }
 
+    // Check if there is enough stock
+    if (product.quantity < quantity) {
+      return res.status(400).json({
+        message: "Insufficient stock available",
+        success: false,
+        error: "Insufficient stock",
+      });
+    }
+
     // Calculate total price
     const totalPrice = product.price * quantity;
 
@@ -40,7 +49,35 @@ const createOrder = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).json({
-      message: "Validation failed",
+      message: "Failed to create order",
+      success: false,
+      error: error.name,
+      stack: error.stack,
+    });
+  }
+};
+
+const calculateRevenue = async (req: Request, res: Response) => {
+  try {
+    const revenue = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Revenue calculated successfully",
+      data: {
+        totalRevenue: revenue[0]?.totalRevenue || 0,
+      },
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      message: "Failed to calculate revenue",
       success: false,
       error: error.name,
       stack: error.stack,
@@ -95,4 +132,5 @@ export const OrderController = {
   createOrder,
   getAllOrders,
   getSingleOrder,
+  calculateRevenue,
 };
