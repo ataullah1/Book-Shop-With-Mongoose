@@ -9,11 +9,12 @@ const createProduct = async (req: Request, res: Response) => {
       message: "Product created successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
+      message: "Validation failed",
       success: false,
-      message: "Failed to create product",
-      error: error,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
@@ -26,47 +27,69 @@ const getAllProducts = async (req: Request, res: Response) => {
       message: "Products retrieved successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to get products",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
 
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
-    const result = await Product.findById(req.params.id);
+    const result = await Product.findById(req.params.productId);
+    if (!result) {
+      return res.status(404).json({
+        message: "Product not found",
+        success: false,
+        error: "Resource not found",
+      });
+    }
     res.status(200).json({
       success: true,
-      message: "Product retrieved successfully",
+      message: "Book retrieved successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to get product",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
 
 const updateProduct = async (req: Request, res: Response) => {
   try {
-    const result = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const { productId } = req.params;
+    const updateData = req.body;
+
+    const result = await Product.findByIdAndUpdate(productId, updateData, {
       new: true,
     });
+
+    if (!result) {
+      return res.status(404).json({
+        message: "Product not found",
+        success: false,
+        error: "Resource not found",
+      });
+    }
+
     res.status(200).json({
+      message: "Book updated successfully",
       success: true,
-      message: "Product updated successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to update product",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
@@ -74,16 +97,24 @@ const updateProduct = async (req: Request, res: Response) => {
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const result = await Product.findByIdAndDelete(req.params.id);
+    if (!result) {
+      return res.status(404).json({
+        message: "Product not found",
+        success: false,
+        error: "Resource not found",
+      });
+    }
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to delete product",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };

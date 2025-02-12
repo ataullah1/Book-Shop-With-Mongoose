@@ -10,8 +10,9 @@ const createOrder = async (req: Request, res: Response) => {
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({
-        success: false,
         message: "Product not found",
+        success: false,
+        error: "Resource not found",
       });
     }
 
@@ -37,11 +38,12 @@ const createOrder = async (req: Request, res: Response) => {
       message: "Order created successfully",
       data: order,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
+      message: "Validation failed",
       success: false,
-      message: "Failed to create order",
-      error: error,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
@@ -54,11 +56,12 @@ const getAllOrders = async (req: Request, res: Response) => {
       message: "Orders retrieved successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to get orders",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
@@ -66,16 +69,24 @@ const getAllOrders = async (req: Request, res: Response) => {
 const getSingleOrder = async (req: Request, res: Response) => {
   try {
     const result = await Order.findById(req.params.orderId).populate("product");
+    if (!result) {
+      return res.status(404).json({
+        message: "Order not found",
+        success: false,
+        error: "Resource not found",
+      });
+    }
     res.status(200).json({
       success: true,
       message: "Order retrieved successfully",
       data: result,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      success: false,
       message: "Failed to get order",
-      error: error,
+      success: false,
+      error: error.name,
+      stack: error.stack,
     });
   }
 };
