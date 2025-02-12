@@ -1,3 +1,5 @@
+//  Interface representing a product (book) in the system
+
 export interface IProduct {
   title: string;
   author: string;
