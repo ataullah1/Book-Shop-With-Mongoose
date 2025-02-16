@@ -191,3 +191,18 @@ pnpm run dev
 ```
 
 ### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Error message here",
+  "error": "ErrorType",
+  "stack": "Error stack trace"
+}
+```
+
+## 👤 Author
+
+**Ataullah**  
+GitHub: [ataullah1](https://github.com/ataullah1)  
+LinkedIn: [md-ataullah](https://linkedin.com/in/md-ataullah)
